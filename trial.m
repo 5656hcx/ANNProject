@@ -15,16 +15,16 @@ grad_b = zeros(N,1);
 grad_v = zeros(1,N);
 
 for loop = 1:num_iteration
-    
-    [error,result] = costFunction(x,w,b,v,H,N);
+    [error,result] = costFunction(x,w,b,v);
     %求w,b,v的梯度, 到底他妈在里外求?
     
+    %update parameters (steepest descent)
     w = w - learning_rate * grad_w;
     b = b - learning_rate * grad_b;
     v = v - learning_rate * grad_v;
 end
 
-plot(x,result .* x,'r-*');
+plot(x,result .* x,'r-o');
 hold on;
 plot(x,analytic(x), 'b-*');
 disp(error);
