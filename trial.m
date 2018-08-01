@@ -1,30 +1,64 @@
-A = 0;                  %φ(0) = 0
-N = 10;                 %number of input
-H = 3;                  %number of hidden nodes
-x = 0:2/(N-1):2;        %input vector
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  trial solution for Q2  %
+%    (steepest descent)   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-w = randn(N,1);         %weight for input
-b = zeros(N,1);         %bias
-v = randn(1,N);         %weight for output
+%  network parameters  %
+
+A = 0; 
+N = 10; 
+H = 6; 
+x = 0:2/(N-1):2; 
 
 learning_rate = 0.01;
-num_iteration = 1;
+num_iteration = 1000;
+err_precision = 1e-1;
 
-grad_w = zeros(N,1);
-grad_b = zeros(N,1);
-grad_v = zeros(1,N);
+w = randn(H,1);
+b = zeros(H,1);
+v = randn(1,H);
 
-for loop = 1:num_iteration
-    [error,result] = costFunction(x,w,b,v);
-    %求w,b,v的梯度, 到底他妈在里外求?
+grad_w = zeros(H,1);
+grad_b = zeros(H,1);
+grad_v = zeros(1,H);
+
+% trainning process %
+
+for loop=1:num_iteration
+    for i=1:H
+        temp_w = sym('w',[H,1]);
+        temp_b = sym('b',[H,1]);
+        temp_v = sym('v',[1,H]);
+
+        for j=1:H
+            if j~=i
+                temp_w = subs(temp_w,temp_w(j),w(j));
+                temp_b = subs(temp_b,temp_b(j),b(j));
+                temp_v = subs(temp_v,temp_v(j),v(j));
+            end
+        end
+
+        grad_w(i) = subs(diff(costFunction(x,temp_w,b,v),temp_w(i)),temp_w(i),w(i));
+        grad_b(i) = subs(diff(costFunction(x,w,temp_b,v),temp_b(i)),temp_b(i),b(i));
+        grad_v(i) = subs(diff(costFunction(x,w,b,temp_v),temp_v(i)),temp_v(i),v(i));
+    end
     
-    %update parameters (steepest descent)
     w = w - learning_rate * grad_w;
-    b = b - learning_rate * grad_b;
-    v = v - learning_rate * grad_v;
+    b = b - learning_rate * grad_b; 
+    v = v - learning_rate * grad_v; 
+    
+    if costFunction(x,w,b,v) < err_precision
+        break;
+    end
+    
 end
 
-plot(x,result .* x,'r-o');
+%  output illustration %
+
+predict_x = 0:2/9:2;
+[cost,result] = costFunction(predict_x,w,b,v);
+
+plot(predict_x,result .* (predict_x),'r-o');
 hold on;
-plot(x,analytic(x), 'b-*');
-disp(error);
+plot(predict_x,analytic(predict_x), 'b-o');
+disp(cost);
