@@ -2,4 +2,4 @@
 ### A Simple Neural Network implemented in MATLAB to solve Differential Equations
 ---
 ##### Known errors:
-1.poor perfomance
+1. Poor Performance in Running Time
