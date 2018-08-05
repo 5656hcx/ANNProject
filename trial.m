@@ -8,7 +8,7 @@ function trial()
     x = 0:2/(N-1):2;    % [input values]
     
     learning_rate = 0.01;
-    num_iteration = 1000;
+    num_iteration = 1e+2;
     err_precision = 1e-3;
     
     w = randn(H,1);
@@ -22,24 +22,22 @@ function trial()
     % trainning process %
     
     tic;
+    syms w_ b_ v_;
     for loop=1:num_iteration
         
+        tmp_w = [w;w_]; tmp_w = tmp_w(1:H);
+        tmp_b = [b;b_]; tmp_b = tmp_b(1:H);
+        tmp_v = [v,v_]; tmp_v = tmp_v(1:H);
+        
         for i=1:H
-            tmp_w = sym('w',[H,1]);
-            tmp_b = sym('b',[H,1]);
-            tmp_v = sym('v',[1,H]);
             
-            for j=1:H
-                if j~=i
-                    tmp_w = subs(tmp_w,tmp_w(j),w(j));
-                    tmp_b = subs(tmp_b,tmp_b(j),b(j));
-                    tmp_v = subs(tmp_v,tmp_v(j),v(j));
-                end
-            end
-            
-            grad_w(i) = subs(diff(costFunction(x,tmp_w,b,v,A),tmp_w(i)),tmp_w(i),w(i));
-            grad_b(i) = subs(diff(costFunction(x,w,tmp_b,v,A),tmp_b(i)),tmp_b(i),b(i));
-            grad_v(i) = subs(diff(costFunction(x,w,b,tmp_v,A),tmp_v(i)),tmp_v(i),v(i));
+            tmp_w(i) = w_; tmp_b(i) = b_; tmp_v(i) = v_;
+			
+            grad_w(i) = subs(diff(costFunction(x,tmp_w,b,v,A),w_),w_,w(i));
+            grad_b(i) = subs(diff(costFunction(x,w,tmp_b,v,A),b_),b_,b(i));
+            grad_v(i) = subs(diff(costFunction(x,w,b,tmp_v,A),v_),v_,v(i));
+			
+            tmp_w(i) = w(i); tmp_b(i) = b(i); tmp_v(i) = v(i);
         end
         
         w = w - learning_rate * grad_w; 
