@@ -9,4 +9,3 @@ function [cost,network] = costFunction(x,w,b,v,A)
     cost = sum((network + x .* network_d + 1/5 * (A + x .* network) - rhs(x)).^2);
     
 end
-

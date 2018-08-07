@@ -58,7 +58,7 @@ function trial()
     predict_x = 0:2/19:2;
     [cost,result] = costFunction(predict_x,w,b,v,A);
     
-    plot(predict_x,result .* (predict_x),'r-o');
+    plot(predict_x,A + result .* (predict_x),'r-o');
     hold on;
     plot(predict_x,analytic(predict_x), 'b-x');
     disp(cost);
