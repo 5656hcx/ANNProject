@@ -1,4 +1,4 @@
-%function trial()
+function trial()
     
     global eval;
     eval = 0;
@@ -17,7 +17,8 @@
     
     tic;
     options = optimset('Display','off','HessUpdate','bfgs','MaxIter',100);
-    output = fminunc(@(p)(costFunction(x,p,A,H)),init_param,options);
+    [output,cost] = fminunc(@(p)(costFunction(x,p,A,H)),init_param,options);
+    disp(cost);
     
     w = output(1:N,:);
     b = output(N+1:2*N,:);
@@ -25,8 +26,8 @@
     
     % output illustration %
     
-    pred_x = 0:2/19:2;
+    pred_x = 0:4/19:4;
     plot(pred_x,tSolution(pred_x,w,b,v,A),'r-o');
     hold on;
     plot(pred_x,analytical(pred_x),'b-x');
-%end
+end

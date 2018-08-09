@@ -55,7 +55,7 @@ function trial()
     
     % output illustration %
     
-    predict_x = 0:2/19:2;
+    predict_x = 0:4/19:4;
     [cost,result] = costFunction(predict_x,w,b,v,A);
     
     plot(predict_x,A + result .* (predict_x),'r-o');
