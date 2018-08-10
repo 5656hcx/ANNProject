@@ -19,7 +19,12 @@ function trial(x,A,H)
     % output illustration %
     
     pred_x = 0:4/19:4;
-    plot(pred_x,tSolution(pred_x,w,b,v,A),'r-o');
+    type = size(A);
+    if type(1) == 1
+        plot(pred_x,tSolutionA(pred_x,w,b,v,A),'r-o');
+    else
+        plot(pred_x,tSolutionB(pred_x,w,b,v,A),'r-o');
+    end
     hold on;
     plot(pred_x,analytical(pred_x),'b-x');
 end
