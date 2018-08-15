@@ -35,6 +35,5 @@ function trial(H)
     
     pred_x = 0:4/19:4;                  % testing sample
     plot(pred_x,tSolution(pred_x,w,b,v,A),'r-x'); hold on;
-    error = arrayfun(@(sample)(costFunction(param,F,N,A,sample,H)),pred_x);
-    plot(pred_x,error,'b-d'); hold off;
+    plot(pred_x,costCalculation(param,F,N,A,pred_x,H),'b-d'); hold off;
 end
