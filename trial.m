@@ -33,7 +33,7 @@ function trial(H)
     
     % output illustration %
     
-    pred_x = 0:4/19:4;                  % testing sample
+    pred_x = 0:2/9:4;                  % testing sample
     plot(pred_x,tSolution(pred_x,w,b,v,A),'r-x'); hold on;
     plot(pred_x,costCalculation(param,F,N,A,pred_x,H),'b-d'); hold off;
 end
