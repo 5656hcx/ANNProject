@@ -20,8 +20,10 @@ function cost = costFunction(p,F,N,A,X,H)
     
     % DISPLAY DEBUG INFORMATION
     
-    global funEval;
-    funEval = funEval + 1;
-    disp(['eval: ',num2str(funEval),' | ','error: ', num2str(cost)]);
-    toc;
+    global loop;
+    loop = loop + 1;
+    if mod(loop,3*H) == 0
+        disp(['loop: ',num2str(loop/(3*H)),' | ','error: ', num2str(cost)]);
+        toc;
+    end
 end

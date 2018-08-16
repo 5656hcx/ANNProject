@@ -1,7 +1,7 @@
 function [w,b,v] = trial(H)
     
-    global funEval;
-    funEval = 0;
+    global loop;
+    loop = 0;
     
     syms x y dx(n);
     % x = independent variable
