@@ -1,4 +1,4 @@
-function trial(H)
+function [w,b,v] = trial(H)
     
     global funEval;
     funEval = 0;
