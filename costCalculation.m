@@ -9,5 +9,5 @@ function cost = costCalculation(p,F,N,A,X,H)
     dx = @(n)diff(tSolution(x,w,b,v,A),n);
     rhs = double(subs(eval(F),{x,y},{X,tSolution(X,w,b,v,A)}));
     lhs = double(subs(diff(tSolution(x,w,b,v,A),N),X));
-    cost = (lhs - rhs).^2;
+    cost = abs(lhs - rhs);
 end
